@@ -46,3 +46,14 @@ gem "twitter-bootstrap-rails"
 group :test, :development do
   gem 'rspec'
 end
+
+group :development do
+  gem 'annotate'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'pry-rails'
+  gem 'quiet_assets'
+  gem 'xray-rails'
+  gem 'byebug'
+end
+
