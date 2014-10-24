@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   # See how all your routes lay out with "rake routes".
 
   resources :blogs do
-    resources :comments
+    resources :comments, only: [:create, :new]
     member do
       get '/update/(:status)', to: 'blogs#update_blog_status'
       put :rename

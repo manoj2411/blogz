@@ -1,3 +1,11 @@
 .thin {
   font-weight: lighter;
 }
+
+.nested_comments {
+  margin-left: 30px;
+}
+
+.comment {
+  padding-left: 10px;
+}

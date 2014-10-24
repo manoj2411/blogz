@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141024122050) do
+ActiveRecord::Schema.define(version: 20141024200512) do
 
   create_table "blogs", force: true do |t|
     t.string   "title"
@@ -29,8 +29,19 @@ ActiveRecord::Schema.define(version: 20141024122050) do
 
   add_index "blogs", ["user_id"], name: "index_blogs_on_user_id"
 
-# Could not dump table "comments" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "comments", force: true do |t|
+    t.text     "message"
+    t.string   "status"
+    t.integer  "blog_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "ancestry"
+  end
+
+  add_index "comments", ["ancestry"], name: "index_comments_on_ancestry"
+  add_index "comments", ["blog_id"], name: "index_comments_on_blog_id"
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false

@@ -27,6 +27,8 @@ GEM
       minitest (~> 5.1)
       thread_safe (~> 0.1)
       tzinfo (~> 1.1)
+    ancestry (2.1.0)
+      activerecord (>= 3.0.0)
     annotate (2.6.5)
       activerecord (>= 2.3.0)
       rake (>= 0.8.7)
@@ -194,6 +196,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  ancestry
   annotate
   better_errors
   binding_of_caller

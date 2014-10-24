@@ -1,0 +1,13 @@
+<div class="comment navbar navbar-default">
+  <div class="created_at">
+    <%= comment.created_at.strftime("%B %d, %Y") %> &nbsp;&nbsp; | &nbsp;&nbsp;
+    <span> By - <%= comment.user.email %></span>
+    <%=raw '&nbsp;&nbsp; | &nbsp;&nbsp;' + content_tag( :span, 'Waiting for moderation') unless comment.approved? %>
+  </div>
+  <div class="message">
+    <%= comment.message %>
+  </div>
+  <div class="actions">
+    <%= link_to "Reply", new_blog_comment_path(@blog, parent_id: comment), class: 'btn btn-default' %>
+  </div>
+</div> <br>

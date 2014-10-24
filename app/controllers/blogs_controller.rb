@@ -19,17 +19,22 @@ class BlogsController < ApplicationController
   # GET /blogs/1
   # GET /blogs/1.json
   def show
-    unless current_user.is_owner?( @blog )
-      respond_to do |format|
+    if !current_user.is_owner?( @blog ) and !@blog.is_published? and !current_user.is_editor?
+        respond_to do |format|
         format.html { redirect_to '/', notice: 'You are not allowed to view this blog!' }
       end
-    else
-      unless @blog.is_published? || !current_user.is_editor?
-        respond_to do |format|
-          format.html { redirect_to '/', notice: 'You are not allowed to view this blog!' }
-        end
-      end
     end
+    # unless current_user.is_owner?( @blog )
+    #   respond_to do |format|
+    #     format.html { redirect_to '/', notice: 'You are not allowed to view this blog!' }
+    #   end
+    # else
+    #   unless @blog.is_published? || !current_user.is_editor?
+    #     respond_to do |format|
+    #       format.html { redirect_to '/', notice: 'You are not allowed to view this blog!' }
+    #     end
+    #   end
+    # end
   end
 
   # GET /blogs/new
@@ -137,7 +142,7 @@ class BlogsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_blog
-      @blog = Blog.find(params[:id])
+      @blog = action_name == 'show' ? Blog.includes(:comments).find(params[:id]) : Blog.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

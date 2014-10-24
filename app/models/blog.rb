@@ -50,12 +50,16 @@ end
 #
 # Table name: blogs
 #
-#  id         :integer          not null, primary key
-#  title      :string(255)
-#  content    :text
-#  status     :string(255)
-#  user_id    :integer
-#  created_at :datetime
-#  updated_at :datetime
-#  type       :string(255)
+#  id                 :integer          not null, primary key
+#  title              :string(255)
+#  content            :text
+#  status             :string(255)
+#  user_id            :integer
+#  created_at         :datetime
+#  updated_at         :datetime
+#  type               :string(255)
+#  image_file_name    :string(255)
+#  image_content_type :string(255)
+#  image_file_size    :integer
+#  image_updated_at   :datetime
 #
