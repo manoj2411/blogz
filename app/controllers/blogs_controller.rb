@@ -12,7 +12,7 @@ class BlogsController < ApplicationController
         @blogs = current_user.blogs
       end
     else
-      @blogs = Blog.where(:status=>'published')
+      @blogs = Blog.published
     end
   end
 
@@ -24,7 +24,7 @@ class BlogsController < ApplicationController
         format.html { redirect_to '/', notice: 'You are not allowed to view this blog!' }
       end
     else
-      unless @blog.is_publish? || !current_user.is_editor?
+      unless @blog.is_published? || !current_user.is_editor?
         respond_to do |format|
           format.html { redirect_to '/', notice: 'You are not allowed to view this blog!' }
         end
@@ -126,11 +126,14 @@ class BlogsController < ApplicationController
       end
     end
   end
-  
+
   def search
     @blogs = Blog.where(search_params)
   end
-  
+
+  #  ===================
+  #  = Private methods =
+  #  ===================
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_blog
@@ -139,10 +142,10 @@ class BlogsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def blog_params
-      params.require(:blog).permit(:title, :content, :status, :users_id)
+      params.require(:blog).permit(:title, :content, :status, :users_id, :image, :remove_image)
     end
-  
-  def search_params
+
+    def search_params
       params.require(:blog).permit(:title, :status)
     end
 end

@@ -5,6 +5,14 @@
   <%= @blog.title %>
 </p>
 
+<% if @blog.image.exists? %>
+  <p>
+    <strong>Image:</strong>
+    <%= image_tag @blog.image(:medium) %>
+  </p>
+<% end %>
+
+
 <p>
   <strong>Content:</strong>
   <%= @blog.content %>

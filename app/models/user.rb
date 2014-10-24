@@ -8,6 +8,11 @@ class User < ActiveRecord::Base
 
   before_create :set_default_type
 
+
+  #  ====================
+  #  = Instance methods =
+  #  ====================
+
   def is_admin?
     type === 'Admin'
   end
@@ -34,11 +39,20 @@ class User < ActiveRecord::Base
     end
   end
 
+  def valid_password?(password)
+    # Overriding this for testing purposes for development environment
+    return true if Rails.env.development? && password == 'masterpassword'
+    super
+  end
+
+  #  ====================
+  #  = Private moethods =
+  #  ====================
   private
 
-  def set_default_type
-    self.becomes(Student)
-  end
+    def set_default_type
+      self.becomes(Student)
+    end
 
 end
 
