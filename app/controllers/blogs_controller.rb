@@ -1,6 +1,7 @@
 class BlogsController < ApplicationController
   skip_before_filter :authenticate_user!, only: [:index]
   before_action :set_blog, only: [:show, :edit, :update, :destroy, :update_blog_status]
+  before_action :authorise_user_for_update, only: [:edit, :update]
 
   # GET /blogs
   # GET /blogs.json
@@ -9,7 +10,7 @@ class BlogsController < ApplicationController
       if current_user.is_admin? || current_user.is_editor?
         @blogs = Blog.all
       else
-        @blogs = current_user.blogs
+        @blogs = (current_user.blogs + Blog.published).uniq
       end
     else
       @blogs = Blog.published
@@ -20,8 +21,14 @@ class BlogsController < ApplicationController
   # GET /blogs/1.json
   def show
     if !current_user.is_owner?( @blog ) and !@blog.is_published? and !current_user.is_editor?
-        respond_to do |format|
-        format.html { redirect_to '/', notice: 'You are not allowed to view this blog!' }
+      respond_to do |format|
+        format.html { redirect_to root_path, notice: 'You are not allowed to view this blog post!' }
+      end
+    else
+      if current_user.is_owner? @blog
+        @comments = @blog.comments.arrange(order: :created_at)
+      else
+        @comments = @blog.comments.where(user_id: current_user.id).arrange(order: :created_at)
       end
     end
     # unless current_user.is_owner?( @blog )
@@ -152,5 +159,9 @@ class BlogsController < ApplicationController
 
     def search_params
       params.require(:blog).permit(:title, :status)
+    end
+
+    def authorise_user_for_update
+      redirect_to root_path, notice: 'You are not allowed to modify this blog post!' unless current_user.can_edit?(@blog)
     end
 end

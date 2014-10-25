@@ -1,0 +1,26 @@
+<div class="navbar navbar-default navbar-static-top">
+  <div class="container">
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+    <a class="navbar-brand" href="/">Workspace</a>
+    <div class="navbar-collapse collapse navbar-responsive-collapse">
+      <ul class="nav navbar-nav">
+        <li><%= link_to "Blogs", blogs_path  %></li>
+        <% unless user_signed_in? %>
+          <li><%= link_to('Login', new_user_session_path)  %></li>
+          <li><%= link_to('Sign up', new_user_registration_path) %></li>
+        <% else %>
+          <li><%= link_to('Comments', comments_path ) %></li>
+          <li>
+            <%= link_to(destroy_user_session_path, :method => :delete) do %>
+              Logout <span class="thin">(<%= current_user.email %>)</span>
+            <% end %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
+  </div>
+</div>

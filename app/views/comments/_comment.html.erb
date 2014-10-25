@@ -1,8 +1,8 @@
 <div class="comment navbar navbar-default">
   <div class="created_at">
-    <%= comment.created_at.strftime("%B %d, %Y") %> &nbsp;&nbsp; | &nbsp;&nbsp;
+    <%= comment.created_at.strftime("%B %d, %Y at %l:%M %P") %> &nbsp;&nbsp; | &nbsp;&nbsp;
     <span> By - <%= comment.user.email %></span>
-    <%=raw '&nbsp;&nbsp; | &nbsp;&nbsp;' + content_tag( :span, 'Waiting for moderation') unless comment.approved? %>
+    <%=raw '&nbsp;&nbsp; | &nbsp;&nbsp;' + content_tag( :span, 'Waiting for approval') unless comment.approved? %>
   </div>
   <div class="message">
     <%= comment.message %>

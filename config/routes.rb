@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  resources :comments
+  resources :comments, only: [:index, :destroy]
 
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.

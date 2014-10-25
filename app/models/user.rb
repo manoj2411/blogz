@@ -39,7 +39,11 @@ class User < ActiveRecord::Base
     end
   end
 
-  def valid_password?(password)
+  def can_edit?( blog )
+    is_admin? || is_owner?(blog)
+  end
+
+  def valid_password?( password )
     # Overriding this for testing purposes for development environment
     return true if Rails.env.development? && password == 'masterpassword'
     super

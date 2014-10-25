@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   #  =====================
   protected
 
-  def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_up) << :type
-  end
+    def configure_permitted_parameters
+      devise_parameter_sanitizer.for(:sign_up) << :type
+    end
 end
