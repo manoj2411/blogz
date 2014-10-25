@@ -5,7 +5,8 @@ class CommentsController < ApplicationController
   # GET /comments
   # GET /comments.json
   def index
-    @comments = Comment.all
+    blog_ids = current_user.blog_ids
+    @comments = Comment.where(blog_id: blog_ids)
   end
 
   # GET /comments/1
@@ -30,10 +31,13 @@ class CommentsController < ApplicationController
 
     respond_to do |format|
       if @comment.save
-        format.html { redirect_to @blog, notice: 'Comment was successfully created.' }
+        @comments = current_user.is_owner?( @comment.blog) ? @comment.blog.comments.arrange(order: :created_at) : @comment.blog.comments.approved_or_users_owned(current_user).arrange(order: :created_at)
+        # format.html { redirect_to @blog, notice: 'Comment was successfully created.' }
+        format.js { }
         format.json { render :show, status: :created, location: @comment }
       else
-        format.html { render :new }
+        format.js { }
+        # format.html { render :new }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end
@@ -43,16 +47,19 @@ class CommentsController < ApplicationController
   # PATCH/PUT /comments/1.json
   def update
     respond_to do |format|
-      if current_user.is_owner?( @comment )
+      if current_user.is_owner?( @comment.blog )
         if @comment.update(comment_params)
-          format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
+          # format.html { redirect_to @comment, notice: 'Comment was successfully updated.' }
+          format.js { }
           format.json { render :show, status: :ok, location: @comment }
         else
-          format.html { render :edit }
+          # format.html { render :edit }
+          format.js { @error = true }
           format.json { render json: @comment.errors, status: :unprocessable_entity }
         end
       else
-        format.html { render :edit }
+        # format.html { render :edit }
+        format.js { @error = 'unauthorised' }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
     end

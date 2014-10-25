@@ -28,7 +28,11 @@
 </p>
 
 
+<div id="comment-form">
+  <%= render 'comments/form', comment: @blog.comments.build, blog: @blog %>
+</div>
 
-<%= render 'comments/form', comment: @blog.comments.build, blog: @blog %>
-<%= nested_comments @comments %>
+<div id="comments-conainer">
+  <%= nested_comments @comments %>
+</div>
 

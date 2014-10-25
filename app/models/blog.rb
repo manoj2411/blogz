@@ -7,6 +7,8 @@ class Blog < ActiveRecord::Base
   belongs_to :user
   has_many :comments
 
+  validates :title, :content, presence: true
+
   before_create :set_publish_status
 
   scope :published, -> { where status: 'published' }

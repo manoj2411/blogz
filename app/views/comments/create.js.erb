@@ -1,0 +1,7 @@
+<% if @comment.errors.present? %>
+  $('#comment-form').html("<%=j render( 'comments/form', comment: @comment, blog: @comment.blog) %>");
+<% else %>
+  $('#comment-form').html("<%=j render( 'comments/form', comment: Comment.new, blog: @comment.blog) %>");
+  $('#comments-conainer').html("<%=j nested_comments( @comments) %>");
+  pushAlert("Comment was successfully created.");
+<% end %>

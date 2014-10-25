@@ -1,29 +1,40 @@
 <h1>Listing comments</h1>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th>Message</th>
-      <th>Status</th>
-      <th>Blog</th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @comments.each do |comment| %>
+<% if @comments.present? %>
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= comment.message %></td>
-        <td><%= comment.status %></td>
-        <td><%= link_to comment.blog.title, comment.blog %></td>
-        <!-- <td><%#= link_to 'Show', comment %></td>
-        <td><%#= link_to 'Edit', edit_comment_path(comment) %></td> -->
-        <td><%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <th>Message</th>
+        <th>Status</th>
+        <th>Blog</th>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
 
-<br>
-
-<%#= link_to 'New Comment', new_comment_path %>
+    <tbody>
+      <% @comments.each do |comment| %>
+        <tr>
+          <td class="message"><%= comment.message %></td>
+          <td>
+            <%= form_for comment, remote: true do |f| %>
+              <div class="btn-group" data-toggle="buttons">
+                <label class="btn btn-primary btn-sm <%= 'active' if comment.approved? %>">
+                  <%= f.radio_button :status, 'approved' -%> Approved
+                </label>
+                <label class="btn btn-primary btn-sm <%= 'active' unless comment.approved? %>">
+                  <%= f.radio_button :status, 'unapproved' -%> Unapprove
+                </label>
+              </div>
+            <% end %>
+          </td>
+          <td><%= link_to comment.blog.title, comment.blog %></td>
+          <td><%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <center>
+    <p class="no_comments"> No comments yet !!!</p>
+  </center>
+<% end %>

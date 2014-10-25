@@ -28,7 +28,7 @@ class BlogsController < ApplicationController
       if current_user.is_owner? @blog
         @comments = @blog.comments.arrange(order: :created_at)
       else
-        @comments = @blog.comments.where(user_id: current_user.id).arrange(order: :created_at)
+        @comments = @blog.comments.approved_or_users_owned(current_user).arrange(order: :created_at)
       end
     end
     # unless current_user.is_owner?( @blog )

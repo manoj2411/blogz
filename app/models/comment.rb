@@ -1,12 +1,14 @@
 class Comment < ActiveRecord::Base
   has_ancestry
 
-  validates :blog_id, :user_id, presence: true
-
   belongs_to :blog
   belongs_to :user
 
+  validates :message, :blog_id, :user_id, presence: true
+
   before_save :set_upapproved_status, if: ->(comment) { comment.status.blank? }
+
+  scope :approved_or_users_owned, ->(user) {where('user_id=? OR status=?', user.id, 'approved')}
 
   #  ===================
   #  = Instance metods =

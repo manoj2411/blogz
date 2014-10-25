@@ -1,0 +1,7 @@
+<% if @error == 'unauthorised' %>
+  alert('Unauthorised access');
+<% elsif @error %>
+  alert('Errors: <%= @comment.errors.full_messages.join(", ") %>');
+<% else %>
+  pushAlert("Comment's status was successfully changed.")
+<% end %>
