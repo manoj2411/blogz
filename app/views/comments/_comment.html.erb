@@ -8,6 +8,6 @@
     <%= comment.message %>
   </div>
   <div class="actions">
-    <%= link_to "Reply", new_blog_comment_path(@blog, parent_id: comment), class: 'btn btn-default' %>
+    <%= link_to "Reply", new_blog_comment_path(@blog, parent_id: comment), class: 'btn btn-default', remote: true %>
   </div>
 </div> <br>

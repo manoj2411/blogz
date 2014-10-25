@@ -17,6 +17,9 @@ class CommentsController < ApplicationController
   # GET /comments/new
   def new
     @comment = Comment.new(parent_id: params[:parent_id])
+    respond_to do |format|
+      format.js { }
+    end
   end
 
   # GET /comments/1/edit
@@ -36,7 +39,7 @@ class CommentsController < ApplicationController
         format.js { }
         format.json { render :show, status: :created, location: @comment }
       else
-        format.js { }
+        format.js { render (@comment.root? ? :create : :new)}
         # format.html { render :new }
         format.json { render json: @comment.errors, status: :unprocessable_entity }
       end
