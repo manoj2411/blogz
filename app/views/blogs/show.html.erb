@@ -1,7 +1,7 @@
 <!-- <p id="notice"><%#= notice %></p> -->
 
-<%= link_to 'Edit', edit_blog_path(@blog) if current_user.can_edit?(@blog) %> |
-<%= link_to 'Back', blogs_path %> <br><br>
+<%= link_to 'Back', blogs_path, class: 'btn btn-default' %>
+<%= link_to 'Edit', edit_blog_path(@blog), class: 'btn btn-default' if current_user.can_edit?(@blog) %>  <br><br>
 
 <p>
   <strong>Title:</strong>

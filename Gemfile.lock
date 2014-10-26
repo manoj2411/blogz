@@ -93,6 +93,7 @@ GEM
     mime-types (1.25.1)
     minitest (5.4.1)
     multi_json (1.10.1)
+    nprogress-rails (0.1.6.3)
     orm_adapter (0.5.0)
     paperclip (4.2.0)
       activemodel (>= 3.0.0)
@@ -206,6 +207,7 @@ DEPENDENCIES
   jbuilder (~> 2.0)
   jquery-rails
   less-rails
+  nprogress-rails
   paperclip (~> 4.2)
   pry-rails
   quiet_assets
