@@ -21,3 +21,12 @@ Few other things you can in this code:
 > - Clean code obviously :)
 
 ----------
+
+
+Setup
+-------------------
+1. Clone it
+2. `bundle install`
+3. Run migrations
+4. And you are ready to go with `rails s`
+
