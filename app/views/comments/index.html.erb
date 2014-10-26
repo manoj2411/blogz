@@ -14,8 +14,8 @@
     <tbody>
       <% @comments.each do |comment| %>
         <tr>
-          <td class="message"><%= comment.message %></td>
-          <td>
+          <td><%= comment.message %></td>
+          <td class="comment-status">
             <%= form_for comment, remote: true do |f| %>
               <div class="btn-group" data-toggle="buttons">
                 <label class="btn btn-primary btn-sm <%= 'active' if comment.approved? %>">
@@ -27,7 +27,7 @@
               </div>
             <% end %>
           </td>
-          <td><%= link_to comment.blog.title, comment.blog %></td>
+          <td class="comment-title"><%= link_to comment.blog.title, comment.blog %></td>
           <td><%= link_to 'Destroy', comment, method: :delete, data: { confirm: 'Are you sure?' } %></td>
         </tr>
       <% end %>

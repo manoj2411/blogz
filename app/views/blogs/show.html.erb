@@ -9,9 +9,10 @@
 
   <% if current_user.can_update_status?(@blog) %>
     <strong>Status:</strong>
-    <%= render_blog_status_for_current_user(@blog) %>
+    <%#= render_blog_status_for_current_user(@blog) %>
+    <%= render('publish_status_form', blog: @blog) %>
     <span class="thin gray"></span>
-    <%= content_tag :span, "(Status updated by: #{@blog.status_updated_by.try(:email) || 'NA'})", class: 'thin gray' if current_user.can_update_status?(@blog) %>
+    <%= content_tag :span, "(Status updated by: #{@blog.status_updated_by.try(:email) || 'NA'})", class: 'thin gray', id: 'status_updated_by' if current_user.can_update_status?(@blog) %>
   <% end %>
 </div>
 
@@ -25,7 +26,7 @@
 <% end %>
 
 <%=raw @blog.content %>
-
+<br><br>
 <div id="comment-form">
   <%= render 'comments/form', comment: @blog.comments.build, blog: @blog %>
 </div>

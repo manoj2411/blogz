@@ -35,8 +35,12 @@ a span.thin, .thin {
   margin: 5%;
 }
 
-td.message {
-  width: 60%;
+td.comment-status {
+  min-width: 175px;
+}
+
+td.comment-title {
+  min-width: 200px;
 }
 
 #error_explanation {
@@ -48,7 +52,7 @@ td.message {
 }
 
 .publish-btns {
-  width: 20%;
+  min-width: 190px;
 }
 
 .blog-status-form {
@@ -57,4 +61,12 @@ display: inline;
 
 .gray {
   color: gray;
+}
+
+td.title {
+  max-width: 350px;
+}
+
+td.date {
+  min-width: 91px;
 }

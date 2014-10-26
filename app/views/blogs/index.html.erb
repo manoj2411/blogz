@@ -10,9 +10,11 @@
   <thead>
     <tr>
       <th>Title</th>
-      <th>Content</th>
-      <th>Status</th>
+      <th>Role</th>
       <th>User</th>
+      <th>Created on</th>
+      <th>Content</th>
+      <th></th>
       <th colspan="2"></th>
     </tr>
   </thead>
@@ -20,17 +22,39 @@
   <tbody>
     <% @blogs.each do |blog| %>
       <tr>
-        <td><%= link_to blog.title, blog %></td>
-        <td><%= truncate( strip_tags(blog.content), length: 150) { link_to ' Continue', blog } %></td>
+        <td class="title"><%= link_to blog.title, blog %></td>
+        <td><%= blog.user.type || 'NA'%></td>
+        <td><%= blog.user.email %></td>
+        <td class="date"><%= blog.created_at.strftime('%d-%m-%Y') %></td>
+
+        <td><%= truncate( strip_tags(blog.content), length: 50) { link_to ' Continue', blog } %></td>
         <td class="publish-btns">
-          <%= render_blog_status_for_current_user(blog) %>
+          <%#= render_blog_status_for_current_user(blog) %>
+          <%= render('publish_status_form', blog: blog) if current_user && current_user.can_update_status?(blog) %>
         </td>
 
-        <td><%= blog.user.email %></td>
-        <% if current_user and current_user.can_edit?( blog) %>
-          <td><%= link_to 'Edit', edit_blog_path(blog), class: 'btn btn-default' %></td>
-          <td><%= link_to 'Destroy', blog, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-        <% end %>
+        <td>
+          <% if current_user and current_user.can_edit?( blog) %>
+            <div class="dropdown">
+              <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown">
+                Action
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                <li role="presentation">
+                  <!-- <a role="menuitem" tabindex="-1" href="#">Action</a> -->
+                  <%= link_to 'Edit', edit_blog_path(blog) %>
+                </li>
+                <li role="presentation" class="divider"></li>
+                <li role="presentation">
+                  <!-- <a role="menuitem" tabindex="-1" href="#">Action</a> -->
+                  <%= link_to 'Destroy', blog, method: :delete, data: { confirm: 'Are you sure?' } %>
+                </li>
+              </ul>
+            </div>
+          <% end %>
+        </td>
+
       </tr>
     <% end %>
   </tbody>

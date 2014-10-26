@@ -4,4 +4,5 @@
   alert('Errors: <%= @blog.errors.full_messages.join(", ") %>');
 <% else %>
   pushAlert("Blog post's status was successfully changed.")
+  $('#status_updated_by').html("(Status updated by: <%= current_user.email %> )")
 <% end %>
