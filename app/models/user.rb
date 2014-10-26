@@ -39,8 +39,13 @@ class User < ActiveRecord::Base
     end
   end
 
-  def can_edit?( blog )
+  def is_owner_or_admin?( blog )
     is_admin? || is_owner?(blog)
+  end
+  alias_method :can_edit?, :is_owner_or_admin?
+
+  def can_update_status?( blog)
+    is_owner_or_admin?( blog ) || is_editor?
   end
 
   def valid_password?( password )

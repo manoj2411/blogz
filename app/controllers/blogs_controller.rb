@@ -1,6 +1,6 @@
 class BlogsController < ApplicationController
   skip_before_filter :authenticate_user!, only: [:index]
-  before_action :set_blog, only: [:show, :edit, :update, :destroy, :update_blog_status]
+  before_action :set_blog, only: [:show, :edit, :update, :destroy, :update_status]
   before_action :authorise_user_for_update, only: [:edit, :update]
 
   # GET /blogs
@@ -61,7 +61,7 @@ class BlogsController < ApplicationController
     respond_to do |format|
       if @blog.save
         format.html { redirect_to @blog, notice: 'Blog was successfully created.' }
-        format.json { render :show, status: :created, location: @blog }
+        format.json { render :show, status: :created, blog: @blog }
       else
         format.html { render :new }
         format.json { render json: @blog.errors, status: :unprocessable_entity }
@@ -76,7 +76,7 @@ class BlogsController < ApplicationController
       respond_to do |format|
         if @blog.update(blog_params)
           format.html { redirect_to @blog, notice: 'Blog was successfully updated.' }
-          format.json { render :show, status: :ok, location: @blog }
+          format.json { render :show, status: :ok, blog: @blog }
         else
           format.html { render :edit }
           format.json { render json: @blog.errors, status: :unprocessable_entity }
@@ -124,17 +124,19 @@ class BlogsController < ApplicationController
     end
   end
 
-  def update_blog_status
+  def update_status
     # Does the user have permission to update the blog status?
-    if current_user.is_owner?( @blog )
-      respond_to do |format|
-        if @blog.update(blog_params)
-          format.html { redirect_to @blog, notice: 'Blog was successfully updated.' }
-          format.json { render :show, status: :ok, location: @blog }
+    respond_to do |format|
+      format.js do
+        @blog.assign_attributes status_updated_by: current_user
+        if current_user.can_update_status?( @blog )
+          unless @blog.update(blog_params)
+            @error = true
+          end
         else
-          format.html { render :edit }
-          format.json { render json: @blog.errors, status: :unprocessable_entity }
+          @error = 'unauthorised'
         end
+        # render :edit
       end
     end
   end
@@ -154,7 +156,11 @@ class BlogsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def blog_params
-      params.require(:blog).permit(:title, :content, :status, :users_id, :image, :remove_image)
+      if action_name == 'update_status'
+        params.require(:blog).permit(:status)
+      else
+        params.require(:blog).permit(:title, :content, :status, :users_id, :image, :remove_image)
+      end
     end
 
     def search_params

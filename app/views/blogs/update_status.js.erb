@@ -1,0 +1,7 @@
+<% if @error == 'unauthorised' %>
+  alert('Unauthorised access');
+<% elsif @error %>
+  alert('Errors: <%= @blog.errors.full_messages.join(", ") %>');
+<% else %>
+  pushAlert("Blog post's status was successfully changed.")
+<% end %>

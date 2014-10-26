@@ -3,3 +3,7 @@ function pushAlert(message) {
   $(".alert").alert('close');
   $('#main-content').prepend(message_box);
 }
+
+$(document).on('page:load', function(){
+  window['rangy'].initialized = false
+})

@@ -13,8 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require bootstrap-wysihtml5
 //= require nprogress
 //= require nprogress-turbolinks
 //= require nprogress-ajax
 //= require turbolinks
 //= require_tree .
+
+Turbolinks.pagesCached(20);
+Turbolinks.enableTransitionCache();

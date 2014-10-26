@@ -21,8 +21,11 @@
     <% @blogs.each do |blog| %>
       <tr>
         <td><%= link_to blog.title, blog %></td>
-        <td><%= truncate( blog.content, length: 150) { link_to ' Continue', blog } %></td>
-        <td><%= blog.status %></td>
+        <td><%= truncate( strip_tags(blog.content), length: 150) { link_to ' Continue', blog } %></td>
+        <td class="publish-btns">
+          <%= render_blog_status_for_current_user(blog) %>
+        </td>
+
         <td><%= blog.user.email %></td>
         <% if current_user and current_user.can_edit?( blog) %>
           <td><%= link_to 'Edit', edit_blog_path(blog), class: 'btn btn-default' %></td>

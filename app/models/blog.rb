@@ -5,6 +5,7 @@ class Blog < ActiveRecord::Base
   attr_accessor :remove_image
 
   belongs_to :user
+  belongs_to :status_updated_by, class_name: 'User'
   has_many :comments
 
   validates :title, :content, presence: true
@@ -19,15 +20,17 @@ class Blog < ActiveRecord::Base
   def is_published?
     status === 'published'
   end
-
+  alias_method :published?, :is_published?
 
   def is_draft?
     status === 'draft'
   end
+  alias_method :draft?, :is_draft?
 
   def is_pending?
     status === 'pending'
   end
+  alias_method :pending?, :is_pending?
 
   def publish
     update_attribute :status, 'published'
@@ -52,16 +55,17 @@ end
 #
 # Table name: blogs
 #
-#  id                 :integer          not null, primary key
-#  title              :string(255)
-#  content            :text
-#  status             :string(255)
-#  user_id            :integer
-#  created_at         :datetime
-#  updated_at         :datetime
-#  type               :string(255)
-#  image_file_name    :string(255)
-#  image_content_type :string(255)
-#  image_file_size    :integer
-#  image_updated_at   :datetime
+#  id                   :integer          not null, primary key
+#  title                :string(255)
+#  content              :text
+#  status               :string(255)
+#  user_id              :integer
+#  created_at           :datetime
+#  updated_at           :datetime
+#  type                 :string(255)
+#  image_file_name      :string(255)
+#  image_content_type   :string(255)
+#  image_file_size      :integer
+#  image_updated_at     :datetime
+#  status_updated_by_id :integer
 #

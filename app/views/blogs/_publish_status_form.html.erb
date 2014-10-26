@@ -1,0 +1,13 @@
+<%= form_for blog, url: update_status_blog_path(blog), remote: true, html: {class: 'blog-status-form'} do |f| %>
+  <div class="btn-group" data-toggle="buttons">
+    <label class="btn btn-primary btn-sm <%= 'active' if blog.published? %>">
+      <%= f.radio_button :status, 'published' -%> Publish
+    </label>
+    <label class="btn btn-primary btn-sm <%= 'active' if blog.draft? %>">
+      <%= f.radio_button :status, 'draft' -%> draft
+    </label>
+    <label class="btn btn-primary btn-sm <%= 'active' if blog.pending? %>">
+      <%= f.radio_button :status, 'pending' -%> pending
+    </label>
+  </div>
+<% end %>
