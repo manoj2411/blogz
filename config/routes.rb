@@ -8,17 +8,8 @@ Rails.application.routes.draw do
   resources :blogs do
     resources :comments, only: [:create, :new]
     member do
-      # get '/update/(:status)', to: 'blogs#update_blog_status'
-      #
-      # We are trying to update the status of a blog here and in this case our request should be PUT or PATCH. It shouldn't be GET
       match :update_status, via: [:put, :patch]
-
-      put :rename
     end
-    collection do
-      put :destroy_multiple
-    end
-    # get 'search/(:params)', on: :collection
   end
 
   # You can have the root of your site routed with "root"
