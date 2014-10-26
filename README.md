@@ -18,6 +18,7 @@ Few other things you can in this code:
 > -  **Twitter bootstrap**.
 > - Very simple **text editor**.
 > - Commenting system.
+> - **AJAX**.
 > - Clean code obviously :)
 
 ----------
