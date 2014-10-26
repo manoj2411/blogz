@@ -3,7 +3,7 @@ Blogz
 
 Hey! This is a sample app for **Blog posting** simply. I used gems that I wanted to try out like [bootstrap-wysihtml5-rails](https://github.com/Nerian/bootstrap-wysihtml5-rails), [nprogress-rails](https://github.com/caarlos0/nprogress-rails), for sortable columns etc. Just kidding, somebody asked to create this sample app ;)
 
----
+-------------------
 
 Here are the list of things that this app can do (or requirements):
 
@@ -21,7 +21,7 @@ Few other things you can in this code:
 > - **AJAX**.
 > - Clean code obviously :)
 
-----------
+-------------------
 
 
 Setup
