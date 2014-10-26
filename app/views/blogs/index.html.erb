@@ -9,10 +9,10 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Title</th>
+      <th><%= sort_link @search, :title %></th>
       <th>Role</th>
       <th>User</th>
-      <th>Created on</th>
+      <th><%= sort_link @search, :created_at, 'Date' %></th>
       <th>Content</th>
       <th></th>
       <th colspan="2"></th>

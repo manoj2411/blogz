@@ -45,6 +45,7 @@ gem 'bootstrap-wysihtml5-rails-font-awesome', '~> 0.3.1.25'
 gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
 gem 'nprogress-rails'
 gem 'paperclip', '~> 4.2'
+gem 'ransack'
 gem 'therubyracer'
 gem 'twitter-bootstrap-rails'
 

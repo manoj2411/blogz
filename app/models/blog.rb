@@ -13,6 +13,7 @@ class Blog < ActiveRecord::Base
   before_create :set_publish_status
 
   scope :published, -> { where status: 'published' }
+  scope :published_or_users_owned, ->(user) {where('user_id=? OR status=?', user.id, 'published')}
 
   #  ====================
   #  = Instance methods =

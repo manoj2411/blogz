@@ -8,13 +8,17 @@ class BlogsController < ApplicationController
   def index
     if user_signed_in?
       if current_user.is_admin? || current_user.is_editor?
-        @blogs = Blog.all
+        # @blogs = Blog.all
+        @search = Blog.search(params[:q])
       else
-        @blogs = (current_user.blogs + Blog.published).uniq
+        # @blogs = Blog.published_or_users_owned
+        @search = Blog.published_or_users_owned(current_user).search(params[:q])
       end
     else
-      @blogs = Blog.published
+      @search = Blog.published.search(params[:q])
+      # @blogs = Blog.published
     end
+    @blogs = @search.result
   end
 
   # GET /blogs/1
