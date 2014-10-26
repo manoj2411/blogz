@@ -9,13 +9,13 @@ class BlogsController < ApplicationController
     if user_signed_in?
       if current_user.is_admin? || current_user.is_editor?
         # @blogs = Blog.all
-        @search = Blog.search(params[:q])
+        @search = Blog.includes(:user).search(params[:q])
       else
         # @blogs = Blog.published_or_users_owned
-        @search = Blog.published_or_users_owned(current_user).search(params[:q])
+        @search = Blog.published_or_users_owned(current_user).includes(:user).search(params[:q])
       end
     else
-      @search = Blog.published.search(params[:q])
+      @search = Blog.published.includes(:user).search(params[:q])
       # @blogs = Blog.published
     end
     @blogs = @search.result
